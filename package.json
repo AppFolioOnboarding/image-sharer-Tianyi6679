@@ -33,6 +33,7 @@
   },
   "scripts": {
     "lint": "eslint app/javascript",
+    "postinstall": "npm install",
     "lint:fix": "eslint app/javascript --fix",
     "test": "mocha --recursive --compilers js:@babel/register --require app/javascript/testHelpers.js --require ignore-styles app/javascript/**/test"
   }
