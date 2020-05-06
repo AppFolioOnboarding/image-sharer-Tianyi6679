@@ -1,0 +1,13 @@
+<% flash.keys.each do |key| %>
+  <div class="<%= key %>"><%= flash[key] %></div>
+<% end %>
+
+<p>
+  <strong>Title:</strong>
+  <%= @image.title %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @image.url %>
+</p>
