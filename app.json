@@ -16,9 +16,6 @@
     "RAILS_SERVE_STATIC_FILES": {
       "required": false
     },
-    "NPM_CONFIG_PRODUCTION": {
-      "value": false
-    },
     "SECRET_KEY_BASE": {
       "generator": "secret"
     }
