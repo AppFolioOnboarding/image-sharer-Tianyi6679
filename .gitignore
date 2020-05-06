@@ -22,7 +22,7 @@
 
 # Don't check in node_modules
 node_modules
-/public/packs
-/public/packs-test
+#/public/packs
+#/public/packs-test
 /node_modules
 .idea/
