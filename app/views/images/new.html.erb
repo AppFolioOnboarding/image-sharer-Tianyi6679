@@ -2,7 +2,7 @@
   <p>
     <%= form.label :title %><br>
     <% if @image.errors.include?(:title) %>
-      <span id="title_error"><%= "#{:title.to_s.capitalize} #{@image.errors[:title].first}" %></span>
+      <span id="title_error"><%= 'Title ' + @image.errors[:title].first %></span>
     <% end %>
     <%= form.text_field :title %>
   </p>
