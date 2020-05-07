@@ -5,6 +5,14 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     get new_image_path
     assert_equal 'new', @controller.action_name
     assert_response :success
+    assert_select 'form input' do
+      assert_select '[name=?]', 'image[title]'
+      assert_select '[name=?]', 'commit'
+    end
+
+    assert_select 'form textarea' do
+      assert_select '[name=?]', 'image[url]'
+    end
   end
 
   test 'successful create' do
