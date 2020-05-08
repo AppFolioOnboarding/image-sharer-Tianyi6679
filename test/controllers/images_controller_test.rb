@@ -44,6 +44,22 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select '#url_error', 'Please enter a valid URL'
   end
 
+  test 'index' do
+    get images_path
+
+    assert_response :success
+    assert_select '#page-header', 'All Images'
+    assert_select 'a' do
+      assert_select '[href=?]', new_image_path
+    end
+
+    assert_select 'table', 1 do
+      assert_select 'th', 'Title'
+      assert_select 'th', 'Preview'
+      assert_select '.js-image', 2
+    end
+  end
+
   test 'show' do
     @test_image = Image.create!(
       title: 'A testing sample',

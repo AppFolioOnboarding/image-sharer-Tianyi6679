@@ -8,6 +8,7 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h1', "Welcome to Tim's Image Sharer"
     assert_select 'a' do
       assert_select '[href=?]', new_image_path
+      assert_select '[href=?]', images_path
     end
   end
 end
