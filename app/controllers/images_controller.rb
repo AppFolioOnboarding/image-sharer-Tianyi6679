@@ -15,7 +15,7 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.all
+    @images = Image.all.reverse
   end
 
   def show

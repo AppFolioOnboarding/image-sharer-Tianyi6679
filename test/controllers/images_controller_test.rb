@@ -53,10 +53,10 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '[href=?]', new_image_path
     end
 
-    assert_select 'table', 1 do
-      assert_select 'th', 'Title'
-      assert_select 'th', 'Preview'
-      assert_select '.js-image', 2
+    assert_select '.container', 1 do
+      assert_select '#header1', 'Title'
+      assert_select '#header2', 'Preview'
+      assert_select '.row', 3
     end
   end
 
