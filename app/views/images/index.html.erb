@@ -8,7 +8,7 @@
     <th>Preview</th>
   </tr>
 
-  <% @images.each do |image| %>
+  <% @images.reverse_each do |image| %>
     <tr class="js-image">
       <td><%= image.title %></td>
       <td><%= link_to(image_tag(image.url, size: 400), image_path(image)) %></td>
