@@ -40,7 +40,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       post images_path, params: { image: invalid_image_params }
     end
 
-    assert_select '#title_error', 'Title is too short (minimum is 5 characters)'
+    assert_select '#title_error', 'is too short (minimum is 5 characters)'
     assert_select '#url_error', 'Please enter a valid URL'
   end
 
@@ -53,10 +53,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '[href=?]', new_image_path
     end
 
-    assert_select '.container', 1 do
-      assert_select '#header1', 'Title'
-      assert_select '#header2', 'Preview'
-      assert_select '.row', 3
+    assert_select 'main', 1 do
+      assert_select '.card', 2
     end
   end
 
