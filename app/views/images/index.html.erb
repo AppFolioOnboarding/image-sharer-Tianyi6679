@@ -1,16 +1,17 @@
+
 <h1 id="page-header">
   All Images
 </h1>
 <%= link_to "Add your own images", new_image_path %>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4" id="header1"><p>Title</p> </div>
-    <div class="col-sm-8" id="header2"><p>Preview</p></div>
-  </div>
-  <% @images.each do |image| %>
-    <div class="row">
-      <div class="col-sm-4"><%= image.title %></div>
-      <div class="col-sm-8"><%= link_to(image_tag(image.url, size: 400), image_path(image)) %></div>
-    </div>
+<div class="row">
+  <% @images.each do |img| %>
+        <div class="col-sm-auto">
+          <div class="card">
+            <%=image_tag(img.url, size: 400, class: 'card-img-top mx-auto')%>
+            <div class="card-block">
+              <h3 class="card-title"><%= img.title %></h3>
+            </div>
+          </div>
+        </div>
   <% end %>
 </div>

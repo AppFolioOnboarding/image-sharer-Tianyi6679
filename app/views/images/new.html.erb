@@ -1,23 +1,7 @@
-<%= form_with scope: :image, url: images_url, local: true do |form| %>
-  <p>
-    <%= form.label :title %><br>
-    <% if @image.errors.include?(:title) %>
-      <span id="title_error"><%= 'Title ' + @image.errors[:title].first %></span>
-    <% end %>
-    <%= form.text_field :title %>
-  </p>
-
-  <p>
-    <%= form.label :url %><br>
-    <% if @image.errors.include?(:url) %>
-      <span id="url_error"><%= @image.errors[:url].first %></span>
-    <% end %>
-    <%= form.text_area :url %>
-  </p>
-  <p>
-    <span id='counter'><%= "There are #{pluralize(Image.count, 'image')} in db" %></span>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
+<%= simple_form_for @image,
+                    wrapper: :horizontal_form do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :title%>
+  <%= f.input :url %>
+  <%= f.button :submit, class: 'btn-primary' %>
 <% end %>
