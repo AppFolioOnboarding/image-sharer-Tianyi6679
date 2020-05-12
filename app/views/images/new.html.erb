@@ -1,10 +1,7 @@
-<%= simple_form_for @image do |f| %>
-
-  <%= f.label :title, required: false%><br/>
-  <%= f.input_field :title %>
-  <%= f.error :title, id: 'title_error' %><br/>
-  <%= f.label :url, required: false %><br/>
-  <%= f.input_field :url, as: :text%>
-  <%= f.error :url, id: 'url_error' %><br/>
-  <%= f.submit 'Save' %>
+<%= simple_form_for @image,
+                    wrapper: :horizontal_form do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :title%>
+  <%= f.input :url %>
+  <%= f.button :submit, class: 'btn-primary' %>
 <% end %>

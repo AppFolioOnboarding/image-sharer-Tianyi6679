@@ -9,7 +9,7 @@ class ImageTest < ActiveSupport::TestCase
 
     assert_not new_image.valid?
     assert_equal ['is too short (minimum is 5 characters)'], new_image.errors.messages[:title]
-    assert_equal ['Please enter a valid URL'], new_image.errors.messages[:url]
+    assert_equal ['is invalid'], new_image.errors.messages[:url]
   end
 
   test 'valid input' do
