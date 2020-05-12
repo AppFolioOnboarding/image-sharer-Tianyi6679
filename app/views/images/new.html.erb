@@ -1,40 +1,10 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="<%=root_path %>">Image Sharer</a>
+<%= simple_form_for @image do |f| %>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="<%=root_path %>">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<%=images_path %>">Show All</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">New Image<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<main>
-  <%= simple_form_for @image do |f| %>
-
-    <%= f.label :title, required: false%><br/>
-    <%= f.input_field :title %>
-    <%= f.error :title, id: 'title_error' %><br/>
-    <%= f.label :url, required: false %><br/>
-    <%= f.input_field :url, as: :text%>
-    <%= f.error :url, id: 'url_error' %><br/>
-    <%= f.submit 'Save' %>
-  <% end %>
-</main>
-
-
-<footer class="footer">
-  <div class="container">
-    <span> This is my sticky footer </span>
-  </div>
-</footer>
+  <%= f.label :title, required: false%><br/>
+  <%= f.input_field :title %>
+  <%= f.error :title, id: 'title_error' %><br/>
+  <%= f.label :url, required: false %><br/>
+  <%= f.input_field :url, as: :text%>
+  <%= f.error :url, id: 'url_error' %><br/>
+  <%= f.submit 'Save' %>
+<% end %>
