@@ -18,7 +18,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'successful create' do
     valid_image_params = {
       title: 'test is only 4-character-long but we need 5',
-      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg'
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1, tag2'
     }
     assert_difference 'Image.count', 1 do
       post images_path, params: { image: valid_image_params }
@@ -28,6 +29,15 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'You have successfully saved an image.', flash[:success]
     assert_equal Image.last.title, valid_image_params[:title]
     assert_equal Image.last.url, valid_image_params[:url]
+    assert_equal Image.last.tag_list.count, 2
+    assert_equal Image.last.tag_list.to_s, valid_image_params[:tag_list]
+
+    valid_image_params.delete :tag_list
+    assert_difference 'Image.count', 1 do
+      post images_path, params: { image: valid_image_params }
+    end
+
+    assert_equal Image.last.tag_list.count, 0
   end
 
   test 'unsuccessful create' do
