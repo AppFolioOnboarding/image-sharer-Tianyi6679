@@ -3,6 +3,9 @@
   All Images
 </h1>
 <%= link_to "Add your own images", new_image_path %>
+<div class="alert alert-info" role="alert">
+  Filter Status: <%= @filter_msg %>
+</div>
 <div class="row">
   <% @images.each do |img| %>
         <div class="col-sm-auto">
@@ -10,7 +13,15 @@
             <%=image_tag(img.url, size: 400, class: 'card-img-top mx-auto')%>
             <div class="card-block">
               <h3 class="card-title"><%= img.title %></h3>
-              <p class="card-text">Tag(s): <%= img.tag_list.empty? ? 'Empty' : img.tag_list.to_s %></p>
+              <p class="card-text">
+                <% if img.tag_list.empty? %>
+                  No Tag
+                <% else %>
+                  <% img.tag_list.each do |t| %>
+                    <%= link_to t, {action: 'index', tag_filter: t}, method: :get, class: 'btn btn-outline-primary'%>
+                  <% end %>
+                <% end %>
+              </p>
             </div>
           </div>
         </div>

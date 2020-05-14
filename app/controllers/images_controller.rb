@@ -15,7 +15,13 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.order(created_at: :desc)
+    if params[:tag_filter].blank?
+      @images = Image.order(created_at: :desc)
+      @filter_msg = 'No tag is selected'
+    else
+      @images = Image.tagged_with(params[:tag_filter]).order(created_at: :desc)
+      @filter_msg = 'Tag ' + params[:tag_filter] + ' is selected'
+    end
   end
 
   def show
