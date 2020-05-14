@@ -5,29 +5,39 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     get new_image_path
     assert_equal 'new', @controller.action_name
     assert_response :success
-    assert_select 'form input' do
+    assert_select '.form-control' do
       assert_select '[name=?]', 'image[title]'
-      assert_select '[name=?]', 'commit'
-    end
-
-    assert_select 'form' do
       assert_select '[name=?]', 'image[url]'
+      assert_select '[name=?]', 'image[tag_list]'
     end
+    assert_select 'form input[type=submit][value=?]', 'Create Image'
   end
 
   test 'successful create' do
     valid_image_params = {
       title: 'test is only 4-character-long but we need 5',
-      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg'
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1, tag2'
     }
     assert_difference 'Image.count', 1 do
       post images_path, params: { image: valid_image_params }
     end
 
-    assert_redirected_to image_path(Image.last)
+    img = Image.last
+    assert_redirected_to image_path(img)
     assert_equal 'You have successfully saved an image.', flash[:success]
-    assert_equal Image.last.title, valid_image_params[:title]
-    assert_equal Image.last.url, valid_image_params[:url]
+    assert_equal img.title, valid_image_params[:title]
+    assert_equal img.url, valid_image_params[:url]
+    assert_equal img.tag_list.count, 2
+    assert_equal img.tag_list.to_s, valid_image_params[:tag_list]
+
+    valid_image_params.delete :tag_list
+    assert_difference 'Image.count', 1 do
+      post images_path, params: { image: valid_image_params }
+    end
+
+    img = Image.last
+    assert_equal img.tag_list.count, 0
   end
 
   test 'unsuccessful create' do
@@ -45,6 +55,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'index' do
+    image_params = {
+      title: 'test tag list',
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1, tag2'
+    }
+    Image.create!(image_params)
+
     get images_path
 
     assert_response :success
@@ -54,7 +71,10 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_select 'main', 1 do
-      assert_select '.card', 2
+      assert_select '.card', 3 do
+        assert_select '.card-text', 'Tag(s): Empty', 2
+        assert_select '.card-text', 'Tag(s): tag1, tag2', 1
+      end
     end
   end
 

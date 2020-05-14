@@ -6,4 +6,6 @@ class Image < ApplicationRecord
   validates :url, format: {
     with: URI.regexp(%w[http https])
   }
+
+  acts_as_taggable_on :tags
 end
