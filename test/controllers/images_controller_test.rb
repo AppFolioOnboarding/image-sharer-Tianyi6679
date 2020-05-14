@@ -61,20 +61,36 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       tag_list: 'tag1, tag2'
     }
     Image.create!(image_params)
-
     get images_path
-
     assert_response :success
     assert_select '#page-header', 'All Images'
     assert_select 'a' do
       assert_select '[href=?]', new_image_path
     end
 
-    assert_select 'main', 1 do
-      assert_select '.card', 3 do
-        assert_select '.card-text', 'Tag(s): Empty', 2
-        assert_select '.card-text', 'Tag(s): tag1, tag2', 1
+    assert_select '.alert.alert-info', 'Filter Status: No tag is selected'
+    assert_select '.card', 3 do
+      assert_select '.card-text', 'No Tag', 2
+      assert_select '.card-block' do
+        assert_select '.card-title', 'test tag list'
+        assert_select 'button', 'tag1'
+        assert_select 'button', 'tag2'
       end
+    end
+  end
+
+  test 'index_with_filter' do
+    image_params = {
+      title: 'test tag list',
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1'
+    }
+    Image.create!(image_params)
+    get images_path, params: { tag_filter: 'tag1' }
+
+    assert_select '.alert.alert-info', 'Filter Status: Tag tag1 is selected'
+    assert_select '.card', 1 do
+      assert_select '.card-title', 'test tag list'
     end
   end
 
