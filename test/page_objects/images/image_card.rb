@@ -1,16 +1,21 @@
 module PageObjects
   module Images
     class ImageCard < AePageObjects::Element
+      collection :tag_list, locator: '.card-text', item_locator: '.btn' do
+        element :tag
+      end
+
       def url
         node.find('img')[:src]
       end
 
       def tags
-        # TODO
+        tag_list.map(&:text)
       end
 
       def click_tag!(tag_name)
-        # TODO
+        node.click_on tag_name
+        window.change_to(IndexPage)
       end
     end
   end

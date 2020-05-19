@@ -25,7 +25,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     img = Image.last
     assert_redirected_to image_path(img)
-    assert_equal 'You have successfully saved an image.', flash[:success]
+    assert_equal 'You have successfully added an image.', flash[:success]
     assert_equal img.title, valid_image_params[:title]
     assert_equal img.url, valid_image_params[:url]
     assert_equal img.tag_list.count, 2
@@ -73,8 +73,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '.card-text', 'No Tag', 2
       assert_select '.card-block' do
         assert_select '.card-title', 'test tag list'
-        assert_select 'button', 'tag1'
-        assert_select 'button', 'tag2'
+        assert_select '.btn', 'tag1'
+        assert_select '.btn', 'tag2'
       end
     end
   end
