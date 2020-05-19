@@ -2,6 +2,11 @@
 <h1 id="page-header">
   All Images
 </h1>
+
+<% flash.keys.each do |key| %>
+  <div class="alert alert-<%=key %>"><%= flash[key] %></div>
+<% end %>
+
 <%= link_to "Add your own images", new_image_path %>
 <div class="alert alert-info" role="alert">
   Filter Status: <%= @filter_msg %>
@@ -13,7 +18,7 @@
             <%=image_tag(img.url, size: 400, class: 'card-img-top mx-auto')%>
             <div class="card-block">
               <h3 class="card-title"><%= img.title %></h3>
-              <p class="card-text">
+              <p class="card-text" id="tags">
                 <% if img.tag_list.empty? %>
                   No Tag
                 <% else %>
@@ -22,6 +27,8 @@
                   <% end %>
                 <% end %>
               </p>
+              <%=link_to 'Delete', image_path(img), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger' %>
+              <%=link_to 'View', image_path(img), method: :get, class: 'btn btn-primary' %>
             </div>
           </div>
         </div>

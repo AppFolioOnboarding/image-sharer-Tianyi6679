@@ -1,5 +1,5 @@
 <% flash.keys.each do |key| %>
-  <div class="<%= key %>"><%= flash[key] %></div>
+  <div class="alert alert-<%= key %>"><%= flash[key] %></div>
 <% end %>
 
 <p>
@@ -11,3 +11,10 @@
   <strong>Image:</strong>
   <span id="url"><%= image_tag @image.url %></span>
 </p>
+
+<p>
+  <strong>Tags:</strong>
+  <span id="tag"><%=@image.tag_list%></span>
+</p>
+
+<%=link_to 'Delete', image_path(@image.id), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger'%>
