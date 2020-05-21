@@ -21,8 +21,10 @@ module PageObjects
       end
 
       def delete_and_confirm!
-        delete_btn.node.click
-        node.driver.browser.switch_to.alert.accept
+        delete do |confirm_dialog|
+          confirm_dialog.accept
+        end
+
         window.change_to(IndexPage)
       end
 

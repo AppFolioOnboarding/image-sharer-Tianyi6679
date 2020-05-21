@@ -29,13 +29,13 @@ class ImagesController < ApplicationController
   end
 
   def destroy
-    @image = Image.find(params[:id])
-    if @image.destroy
+    begin
+      @image = Image.find(params[:id]).destroy
       flash[:success] = 'You have successfully deleted the image.'
-      redirect_to images_path
-    else
-      flash[:error] = 'An error occurred! Please try again'
+    rescue
+      flash[:error] = 'An error occurred! Please try again.'
     end
+    redirect_to images_path
   end
 
   private

@@ -106,4 +106,22 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '[src=?]', @test_image.url
     end
   end
+
+  test 'destroy' do
+    @image_deleted = Image.first
+    assert_difference 'Image.count', -1 do
+      delete image_path(@image_deleted)
+    end
+
+    assert_redirected_to images_path
+    assert_select "img[src='#{@image_deleted.url}']", false
+    assert_equal 'You have successfully deleted the image.', flash[:success]
+
+    assert_no_difference 'Image.count' do
+      delete image_path(@image_deleted)
+    end
+
+    assert_redirected_to images_path
+    assert_equal 'An error occurred! Please try again.' , flash[:error]
+  end
 end

@@ -3,7 +3,7 @@ module PageObjects
     class IndexPage < PageObjects::Document
       path :images
 
-      collection :images, locator: '.row', item_locator: '.col-sm-auto', contains: ImageCard do
+      collection :images, locator: '.row', item_locator: '.card', contains: ImageCard do
         def view!
           node.click_on 'View'
           window.change_to ShowPage
@@ -16,11 +16,9 @@ module PageObjects
       end
 
       def showing_image?(url:, tags: nil)
-        images.each do |img|
-          tag_match = tags.nil? ? true : img.tags == tags
-          return true if tag_match && (img.url == url)
+        images.any? do |img|
+          (tags.nil? || img.tags == tags) && (img.url == url)
         end
-        false
       end
 
       def clear_tag_filter!
