@@ -2,8 +2,10 @@
 
 one:
   title: test1
-  url: test_url1
+  url: 'http://test_url1'
+  id: 1
 
 two:
   title: test2
-  url: test_url2
+  url: 'http://test_url2'
+  id: 2

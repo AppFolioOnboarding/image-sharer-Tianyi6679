@@ -7,7 +7,7 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
 
     if @image.save
-      flash[:success] = 'You have successfully saved an image.'
+      flash[:success] = 'You have successfully added an image.'
       redirect_to @image
     else
       render 'new'
@@ -26,6 +26,16 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find(params[:id])
+  end
+
+  def destroy
+    begin
+      @image = Image.find(params[:id]).destroy
+      flash[:success] = 'You have successfully deleted the image.'
+    rescue StandardError
+      flash[:error] = 'An error occurred! Please try again.'
+    end
+    redirect_to images_path
   end
 
   private

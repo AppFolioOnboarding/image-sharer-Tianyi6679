@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ImagesControllerTest < ActionDispatch::IntegrationTest
+class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable Metrics/ClassLength
   test 'new' do
     get new_image_path
     assert_equal 'new', @controller.action_name
@@ -25,7 +25,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     img = Image.last
     assert_redirected_to image_path(img)
-    assert_equal 'You have successfully saved an image.', flash[:success]
+    assert_equal 'You have successfully added an image.', flash[:success]
     assert_equal img.title, valid_image_params[:title]
     assert_equal img.url, valid_image_params[:url]
     assert_equal img.tag_list.count, 2
@@ -73,8 +73,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '.card-text', 'No Tag', 2
       assert_select '.card-block' do
         assert_select '.card-title', 'test tag list'
-        assert_select 'button', 'tag1'
-        assert_select 'button', 'tag2'
+        assert_select '.btn', 'tag1'
+        assert_select '.btn', 'tag2'
       end
     end
   end
@@ -105,5 +105,23 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'img' do
       assert_select '[src=?]', @test_image.url
     end
+  end
+
+  test 'destroy' do
+    @image_deleted = Image.first
+    assert_difference 'Image.count', -1 do
+      delete image_path(@image_deleted)
+    end
+
+    assert_redirected_to images_path
+    assert_select "img[src='#{@image_deleted.url}']", false
+    assert_equal 'You have successfully deleted the image.', flash[:success]
+
+    assert_no_difference 'Image.count' do
+      delete image_path(@image_deleted)
+    end
+
+    assert_redirected_to images_path
+    assert_equal 'An error occurred! Please try again.', flash[:error]
   end
 end
