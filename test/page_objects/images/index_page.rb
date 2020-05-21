@@ -3,7 +3,7 @@ module PageObjects
     class IndexPage < PageObjects::Document
       path :images
 
-      collection :images, locator: '.row', item_locator: '.card', contains: ImageCard do
+      collection :images, locator: '.row', item_locator: '#image-in-card', contains: ImageCard do
         def view!
           node.click_on 'View'
           window.change_to ShowPage

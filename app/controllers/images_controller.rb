@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
     begin
       @image = Image.find(params[:id]).destroy
       flash[:success] = 'You have successfully deleted the image.'
-    rescue
+    rescue StandardError
       flash[:error] = 'An error occurred! Please try again.'
     end
     redirect_to images_path

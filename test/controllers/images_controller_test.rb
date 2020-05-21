@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ImagesControllerTest < ActionDispatch::IntegrationTest
+class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable Metrics/ClassLength
   test 'new' do
     get new_image_path
     assert_equal 'new', @controller.action_name
@@ -122,6 +122,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to images_path
-    assert_equal 'An error occurred! Please try again.' , flash[:error]
+    assert_equal 'An error occurred! Please try again.', flash[:error]
   end
 end

@@ -14,7 +14,7 @@
 <div class="row">
   <% @images.each do |img| %>
         <div class="col-sm-auto">
-          <div class="card">
+          <div class="card" id="image-in-card">
             <%=image_tag(img.url, size: 400, class: 'card-img-top mx-auto')%>
             <div class="card-block">
               <h3 class="card-title"><%= img.title %></h3>

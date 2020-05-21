@@ -21,9 +21,7 @@ module PageObjects
       end
 
       def delete_and_confirm!
-        delete do |confirm_dialog|
-          confirm_dialog.accept
-        end
+        delete(&:accept)
 
         window.change_to(IndexPage)
       end
