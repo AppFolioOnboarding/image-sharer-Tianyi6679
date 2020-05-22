@@ -30,14 +30,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
     assert_equal img.url, valid_image_params[:url]
     assert_equal img.tag_list.count, 2
     assert_equal img.tag_list.to_s, valid_image_params[:tag_list]
-
-    valid_image_params.delete :tag_list
-    assert_difference 'Image.count', 1 do
-      post images_path, params: { image: valid_image_params }
-    end
-
-    img = Image.last
-    assert_equal img.tag_list.count, 0
   end
 
   test 'unsuccessful create' do
@@ -52,6 +44,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
 
     assert_select '.invalid-feedback', 'Title is too short (minimum is 5 characters)'
     assert_select '.invalid-feedback', 'Url is invalid'
+    assert_select '.invalid-feedback', "Tag list can't be blank"
   end
 
   test 'index' do
@@ -97,7 +90,8 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
   test 'show' do
     @test_image = Image.create!(
       title: 'A testing sample',
-      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg'
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1'
     )
     get image_path(@test_image.id)
     assert_response :success
