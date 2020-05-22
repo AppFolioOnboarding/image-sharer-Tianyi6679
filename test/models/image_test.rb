@@ -10,6 +10,7 @@ class ImageTest < ActiveSupport::TestCase
     assert_not new_image.valid?
     assert_equal ['is too short (minimum is 5 characters)'], new_image.errors.messages[:title]
     assert_equal ['is invalid'], new_image.errors.messages[:url]
+    assert_equal ["can't be blank"], new_image.errors.messages[:tag_list]
   end
 
   test 'valid input' do
@@ -20,10 +21,5 @@ class ImageTest < ActiveSupport::TestCase
     )
 
     assert new_image.valid?
-    new_image.update(tag_list: '')
-    assert new_image.valid?
-
-    assert_equal [], new_image.errors.messages[:title]
-    assert_equal [], new_image.errors.messages[:url]
   end
 end
