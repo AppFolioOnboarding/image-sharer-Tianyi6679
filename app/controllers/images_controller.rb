@@ -14,6 +14,20 @@ class ImagesController < ApplicationController
     end
   end
 
+  def edit
+    @image = Image.find(params[:id])
+  end
+
+  def update
+    @image = Image.find(params[:id])
+
+    if @image.update(image_params)
+      redirect_to @image
+    else
+      render 'edit'
+    end
+  end
+
   def index
     if params[:tag_filter].blank?
       @images = Image.order(created_at: :desc)
