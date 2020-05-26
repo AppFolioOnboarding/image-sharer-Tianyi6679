@@ -1,8 +1,8 @@
 <%= simple_form_for @image,
                     wrapper: :horizontal_form do |f| %>
   <%= f.error_notification %>
-  <%= f.input :title%>
-  <%= f.input :url %>
-  <%= f.input :tag_list, label:'Add Tag(s)', hint: 'e.g., Tag1, Tag2, Tag3', input_html: {value: @image.tag_list.to_s} %>
+  <%= f.input :title %>
+  <%= f.input :tag_list, label:'Edit Tag(s)', input_html: { value: @image.tag_list.to_s } %>
   <%= f.button :submit, class: 'btn-primary' %>
 <% end %>
+<span id="url"><%= image_tag @image.url %></span>

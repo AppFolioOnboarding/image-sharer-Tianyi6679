@@ -29,6 +29,7 @@
               </p>
               <%=link_to 'Delete', image_path(img), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger' %>
               <%=link_to 'View', image_path(img), method: :get, class: 'btn btn-primary' %>
+              <%=link_to 'Edit', edit_image_path(img), method: :get, class: 'btn btn-primary' %>
             </div>
           </div>
         </div>

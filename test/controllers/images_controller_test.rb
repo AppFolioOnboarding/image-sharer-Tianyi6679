@@ -24,7 +24,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
     end
 
     img = Image.last
-    assert_redirected_to image_path(img)
     assert_equal 'You have successfully added an image.', flash[:success]
     assert_equal img.title, valid_image_params[:title]
     assert_equal img.url, valid_image_params[:url]
@@ -99,6 +98,52 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
     assert_select 'img' do
       assert_select '[src=?]', @test_image.url
     end
+  end
+
+  test 'edit' do
+    @test_image = Image.create!(
+      title: 'A testing sample',
+      url: 'https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg',
+      tag_list: 'tag1, tag2'
+    )
+    get edit_image_path(@test_image)
+    assert_response :success
+
+    assert_select '#image_title[value=?]', @test_image.title
+    assert_select '#image_tag_list[value=?]', @test_image.tag_list.to_s
+    assert_select 'img[src=?]', @test_image.url
+  end
+
+  test 'successful update' do
+    update_image_params = {
+      title: 'I update my title',
+      tag_list: 'this, tag, list, is, updated'
+    }
+    img = Image.first
+    put image_path(img), params: { image: update_image_params }
+
+    assert_redirected_to image_path(img)
+    img.reload
+    assert_equal update_image_params[:title], img.title
+    assert_equal update_image_params[:tag_list], img.tag_list.to_s
+  end
+
+  test 'unsuccessful update' do
+    update_image_params = {
+      title: 't',
+      tag_list: ''
+    }
+    img = Image.first
+    img.tag_list.add('tag, list')
+    img.save!
+    put image_path(img), params: { image: update_image_params }
+
+    assert_select '.invalid-feedback', 'Title is too short (minimum is 5 characters)'
+    assert_select '.invalid-feedback', "Tag list can't be blank"
+
+    img.reload
+    assert_not_equal update_image_params[:title], img.title
+    assert_not_equal update_image_params[:tag_list], img.tag_list.to_s
   end
 
   test 'destroy' do

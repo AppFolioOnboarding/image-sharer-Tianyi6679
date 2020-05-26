@@ -8,13 +8,13 @@
 </p>
 
 <p>
-  <strong>Image:</strong>
-  <span id="url"><%= image_tag @image.url %></span>
+  <strong>Tags:</strong>
+  <span id="tag"><%=@image.tag_list%></span>
 </p>
 
 <p>
-  <strong>Tags:</strong>
-  <span id="tag"><%=@image.tag_list%></span>
+  <strong>Image:</strong>
+  <span id="url"><%= image_tag @image.url %></span>
 </p>
 
 <%=link_to 'Delete', image_path(@image.id), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger'%>
