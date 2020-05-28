@@ -52,7 +52,21 @@ class ImagesController < ApplicationController
     redirect_to images_path
   end
 
+  def share
+    @image = Image.find(params[:id])
+  end
+
+  def send_email
+    ImageMailer.welcome_email(send_params).deliver
+    flash[:success] = 'You have successfully shared your image!'
+    redirect_to images_path
+  end
+
   private
+
+  def send_params
+    params.require(:request).permit(:image, :email, :message)
+  end
 
   def image_params
     params.require(:image).permit(:title, :url, :tag_list)
