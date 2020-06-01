@@ -5,7 +5,7 @@ class ImageMailer < ApplicationMailer
     @img = request[:image]
     @email = request[:email]
     @msg = request[:message]
-    @url  = 'https://image-sharer-mailaction-ysoft0.herokuapp.com/'
+    @url = 'https://image-sharer-mailaction-ysoft0.herokuapp.com/'
     mail(to: @email, subject: 'Welcome to My Awesome Image Sharer')
   end
 end

@@ -2,22 +2,20 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Share your image with your friends</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <%= form_for :request, url: image_send_email_path(@image) do |f| %>
+        <%= form_for :request, url: image_send_email_path(1) do |f| %>
           <%= f.label :email, 'Recipient'%><br/>
-          <%= f.text_field :email, require: true%><br/>
+          <%= f.text_field :email, required: true %><br/>
           <%= f.label :message %><br/>
           <%= f.text_area :message, label: 'Message' %>
-          <%= f.hidden_field :image, value: @image.url %><br/>
-          <%= f.submit %>
+          <%= f.hidden_field :image%><br/>
+          <%= f.submit 'Send Email' %>
         <% end %>
-        <div> The image you want to share: </div>
-        <div id="url"><%= image_tag @image.url %></div>
       </div>
     </div>
   </div>

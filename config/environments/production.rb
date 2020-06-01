@@ -1,3 +1,4 @@
+# rubocop:disable all
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
@@ -96,5 +97,4 @@ Rails.application.configure do
     domain: 'heroku.com',
     enable_starttls_auto: true
   }
-
 end

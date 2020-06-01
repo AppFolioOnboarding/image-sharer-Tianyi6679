@@ -146,6 +146,19 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
     assert_not_equal update_image_params[:tag_list], img.tag_list.to_s
   end
 
+  test 'send_email' do
+    @img = Image.first
+    test_send_params = {
+      email: 'email@example.com',
+      message: '',
+      image: @img.url
+    }
+    post image_send_email_path(@img), params: { request: test_send_params }
+
+    assert_redirected_to images_path
+    assert_equal 'You have successfully shared your image!', flash[:success]
+  end
+
   test 'destroy' do
     @image_deleted = Image.first
     assert_difference 'Image.count', -1 do
