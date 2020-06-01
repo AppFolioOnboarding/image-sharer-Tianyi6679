@@ -1,8 +1,0 @@
-<%= form_for :request, url: image_send_email_path(@image) do |f| %>
-  <div>Email:    <%= f.text_field :email %></div>
-  <div>Message : <%= f.text_area :message %></div>
-  <%= f.hidden_field :image, value: @image.url %>
-  <%= f.submit %>
-<% end %>
-<div> Image you are sharing: </div>
-<span id="url"><%= image_tag @image.url %></span>
