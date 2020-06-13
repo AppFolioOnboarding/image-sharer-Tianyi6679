@@ -1,4 +1,4 @@
-class MyModal {
+class ShareImageModal {
   constructor(modalSelector) {
     this.$modal = $(modalSelector);
   }
@@ -7,15 +7,14 @@ class MyModal {
     this.$modal.on('show.bs.modal', (event) => {
       const modalTrigger = event.relatedTarget;
       const modalTitle = modalTrigger.dataset.title;
-      const modalUrl = modalTrigger.dataset.url;
-      
-      this.$modal.find('.modal-title').text('Share your image ' + modalTitle + ' with your friends');
-      this.$modal.find('#request_image').val(modalUrl);
+      const modalImgId = modalTrigger.dataset.id;
+      this.$modal.find('.modal-title').text(`Share your image ${modalTitle} with your friends`);
+      this.$modal.find('#share_form').attr('action', `/images/${modalImgId}/send_email`).submit();
     });
   }
 }
 
 
-const myModal = new MyModal('#myModal');
+const shareImgModal = new ShareImageModal('#shareModal');
 
-myModal.attachEventHandlers();
+shareImgModal.attachEventHandlers();
