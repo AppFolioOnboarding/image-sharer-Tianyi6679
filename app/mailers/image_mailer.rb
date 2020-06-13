@@ -1,11 +1,11 @@
 class ImageMailer < ApplicationMailer
   default from: 'notifications@example.com'
 
-  def welcome_email(request)
-    @img = request[:image]
-    @email = request[:email]
-    @msg = request[:message]
-    @url = 'https://image-sharer-mailaction-ysoft0.herokuapp.com/'
+  def welcome_email(email)
+    @img = email[:img]
+    @email = email[:to]
+    @msg = email[:msg]
+    @url = email[:home]
     mail(to: @email, subject: 'Welcome to My Awesome Image Sharer')
   end
 end

@@ -153,8 +153,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable M
       message: '',
       image: @img.url
     }
-    post image_send_email_path(@img), params: { request: test_send_params }
-
+    post send_email_image_path(@img), params: { request: test_send_params }
     assert_redirected_to images_path
     assert_equal 'You have successfully shared your image!', flash[:success]
   end

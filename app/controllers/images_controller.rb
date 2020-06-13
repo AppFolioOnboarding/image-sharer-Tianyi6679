@@ -52,8 +52,14 @@ class ImagesController < ApplicationController
     redirect_to images_path
   end
 
-  def send_email
-    ImageMailer.welcome_email(send_params).deliver_now
+  def send_email # rubocop:disable Metrics/AbcSize
+    email = {
+      img: Image.find(params[:id]).url,
+      to: send_params[:email],
+      msg: send_params[:message],
+      home: request.base_url
+    }
+    ImageMailer.welcome_email(email).deliver_now
     flash[:success] = 'You have successfully shared your image!'
     redirect_to images_path
   end
@@ -61,7 +67,7 @@ class ImagesController < ApplicationController
   private
 
   def send_params
-    params.require(:request).permit(:image, :email, :message)
+    params.require(:request).permit(:email, :message)
   end
 
   def image_params
