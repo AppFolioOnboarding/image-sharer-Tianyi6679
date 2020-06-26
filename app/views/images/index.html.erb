@@ -30,8 +30,10 @@
               <%=link_to 'Delete', image_path(img), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger' %>
               <%=link_to 'View', image_path(img), method: :get, class: 'btn btn-primary' %>
               <%=link_to 'Edit', edit_image_path(img), method: :get, class: 'btn btn-primary' %>
+              <%=link_to 'Share', images_path, class: 'btn btn-primary', data: {toggle: "modal", target: "#shareModal", title: img.title, id: img.id} %>
             </div>
           </div>
         </div>
   <% end %>
 </div>
+<%=render partial: 'images/modal' %>
